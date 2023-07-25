@@ -8,7 +8,7 @@ enum PlayerState { idle, running }
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure> {
   String character;
-  Player({required this.character});
+  Player({position, required this.character}) : super(position: position);
 
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runAnimation;
@@ -20,8 +20,8 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _loadAllAnimations() {
-    idleAnimation = _spriteAnimation("Idle", 11);
-    runAnimation = _spriteAnimation("Run", 12);
+    final SpriteAnimation idleAnimation = _spriteAnimation("Idle", 11);
+    final SpriteAnimation runAnimation = _spriteAnimation("Run", 12);
 
     //list of all animationms
     animations = {
