@@ -11,7 +11,7 @@ class Level extends World {
   @override
   Future<void> onLoad() async {
     level = await TiledComponent.load("Level-01.tmx", Vector2.all(16));
-    player = Player();
+    player = Player(character: "Ninja Frog");
     add(level);
     add(player);
     return super.onLoad();
