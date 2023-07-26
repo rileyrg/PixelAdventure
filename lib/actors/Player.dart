@@ -8,6 +8,8 @@ enum PlayerState { idle, running }
 
 enum PlayerDirection { left, right, none }
 
+double moveSpeed = 100;
+
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure> {
   String character;
@@ -16,9 +18,10 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation runAnimation;
   final double stepTime = 0.05;
 
-  PlayerDirection playerDirection = PlayerDirection.none;
-  double moveSpeed = 100;
   Vector2 velocity = Vector2.zero();
+
+  PlayerDirection playerDirection = PlayerDirection.left;
+  bool isFacingRight = true; // original sprite value
 
   Player({position, required this.character}) : super(position: position);
   @override
@@ -44,7 +47,7 @@ class Player extends SpriteAnimationGroupComponent
     };
 
     //set current animation
-    current = PlayerState.running;
+    current = PlayerState.idle;
   }
 
   SpriteAnimation _spriteAnimation(String state, int amount) {
@@ -58,13 +61,24 @@ class Player extends SpriteAnimationGroupComponent
     double dirX = 0;
     switch (playerDirection) {
       case PlayerDirection.left:
+        if (isFacingRight) {
+          flipHorizontallyAroundCenter();
+          isFacingRight = false;
+        }
         dirX = -moveSpeed;
+        current = PlayerState.running;
         break;
       case PlayerDirection.right:
+        if (!isFacingRight) {
+          flipHorizontallyAroundCenter();
+          isFacingRight = true;
+        }
         dirX = moveSpeed;
+        current = PlayerState.running;
         break;
       case PlayerDirection.none:
         break;
+        current = PlayerState.idle;
       default:
         break;
     }
