@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 enum PlayerState { idle, running }
@@ -10,6 +9,7 @@ enum PlayerDirection { left, right, none }
 
 double moveSpeed = 100;
 
+// https://docs.flame-engine.org/latest/flame/components.html
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure> {
   String character;

@@ -8,12 +8,13 @@ class Level extends World {
   late TiledComponent level;
   late Player player;
 
-  final String levelName;
-  Level({required this.levelName});
+  final int levelNum;
+  Level({required this.levelNum});
 
   @override
   Future<void> onLoad() async {
-    level = await TiledComponent.load("$levelName.tmx", Vector2.all(16));
+    String ls = levelNum.toString().padLeft(2, '0');
+    level = await TiledComponent.load("Level-$ls.tmx", Vector2.all(16));
     add(level);
     final spawnPointsLayer = level.tileMap.getLayer<ObjectGroup>("Spawnpoints");
     for (final spawnPoint in spawnPointsLayer!.objects) {
